@@ -426,17 +426,20 @@ var Gamma = (function() {
 		// gets all possible image sources of an element
 		_getImgSources = function( $el ) {
 
-			var theSources = [];
-			$el.children( 'div' ).each( function( i ) {
+			var otherImage = $el.data('other-images'),
+                        i = 0,
+                        theSources = [];
 
-				var $source = $( this );
-				theSources.push( {
-					width : $source.data( 'minWidth' ) || 0,
-					src : $source.data( 'src' ),
-					pos : i
-				} );
+                        //otherImage is an array who the minWidth is a key and the image src the value
+                        for( o in otherImage) {
 
-			} );
+                            theSources.push( {
+                                width : o || 0,
+                                src : otherImage[o],
+                                pos : i
+                            } );
+                            i++;
+                        }
 			
 			return theSources;
 
@@ -499,6 +502,8 @@ var Gamma = (function() {
 		// choose a source based on the item's size and on the configuration set by the user in the initial HTML
 		_chooseImgSource = function( sources, w ) {
 
+                        var lastSource = null;
+
 			if( w <= 0 ) {
 				w = 1;
 			}
@@ -512,9 +517,15 @@ var Gamma = (function() {
 
 					return source;
 
-				}
+				} else {
+
+                                    lastSource = source;
+
+                                }
 
 			}
+
+                        return lastSource;
 
 		},
 		// show or hide a specific control button
