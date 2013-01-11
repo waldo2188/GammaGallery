@@ -401,6 +401,12 @@ var Gamma = (function() {
 					sources = _getImgSources( $picEl ),
 					source = _chooseImgSource( sources, $item.outerWidth( true ) ),
 					description = $picEl.data( 'description' );
+					
+					var defaultImage = $picEl.children();
+
+                                        if(defaultImage.size() >= 1) {
+                                            $defaultImage = $(defaultImage[0]);
+                                        }
 
 				// data is saved in the <li> element
 				$item.data( {
@@ -413,8 +419,8 @@ var Gamma = (function() {
 				$( '<div/>' ).addClass( 'gamma-description' ).html( description ).insertAfter( $picEl );
 
 				$( '<img/>' ).attr( {
-					alt : $picEl.data( 'alt' ),
-					title : $picEl.data( 'title' ),
+					alt : $defaultImage.attr( 'alt' ),
+					title : $defaultImage.attr( 'title' ),
 					src : source.src
 				} ).insertAfter( $picEl );
 
